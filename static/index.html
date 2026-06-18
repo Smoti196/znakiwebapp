@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Znaki drogowe AI</title>
+</head>
+
+<body>
+
+<h2>📷 Rozpoznawanie znaków drogowych</h2>
+
+<video id="video" autoplay playsinline width="300"></video>
+<br><br>
+
+<button onclick="takePhoto()">🔍 Rozpoznaj znak</button>
+
+<p id="result">Wynik: ...</p>
+
+<script>
+const video = document.getElementById("video");
+
+// 📷 uruchom kamerę
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+    video.srcObject = stream;
+});
+
+// 📤 robienie zdjęcia i wysyłka
+async function takePhoto() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 224;
+    canvas.height = 224;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, 224, 224);
+
+    canvas.toBlob(async (blob) => {
+
+        const formData = new FormData();
+        formData.append("file", blob, "photo.jpg");
+
+        const res = await fetch("https://TWOJ_BACKEND_URL/predict", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await res.json();
+
+        document.getElementById("result").innerText =
+            "Znak: " + data.label + " | pewność: " + data.confidence;
+    });
+}
+</script>
+
+</body>
+</html>
