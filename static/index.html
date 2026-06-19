@@ -10,6 +10,7 @@
 <h2>📷 Rozpoznawanie znaków drogowych</h2>
 
 <video id="video" autoplay playsinline width="300"></video>
+
 <br><br>
 
 <button onclick="takePhoto()">🔍 Rozpoznaj znak</button>
@@ -19,13 +20,13 @@
 <script>
 const video = document.getElementById("video");
 
-// 📷 uruchom kamerę
+// 📷 kamera
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(stream => {
     video.srcObject = stream;
 });
 
-// 📤 robienie zdjęcia i wysyłka
+// 📤 wysyłanie zdjęcia
 async function takePhoto() {
     const canvas = document.createElement("canvas");
     canvas.width = 224;
@@ -37,9 +38,9 @@ async function takePhoto() {
     canvas.toBlob(async (blob) => {
 
         const formData = new FormData();
-        formData.append("file", blob, "photo.jpg");
+        formData.append("file", blob, "image.jpg");
 
-        const res = await fetch("https://TWOJ_BACKEND_URL/predict", {
+        const res = await fetch("http://192.168.0.13:8000/predict", {
             method: "POST",
             body: formData
         });

@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+generated_dataset/
+*.keras
+*.h5
