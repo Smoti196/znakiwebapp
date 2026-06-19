@@ -75,10 +75,10 @@ history = model.fit(
 )
 
 # 💾 zapis modelu
-model.save("model_znaki.keras")
+model.save("backend/model_znaki.keras")
 
 # 🏷️ zapis klas
-with open("class_names.txt", "w", encoding="utf-8") as f:
+with open("backend/class_names.txt", "w", encoding="utf-8") as f:
     for name in class_names:
         f.write(name + "\n")
 
