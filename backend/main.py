@@ -82,6 +82,15 @@ def debug():
         "output_shape": str(model.output_shape)
     }
 
+@app.get("/test-random")
+def test():
+    x = np.random.rand(1, 224, 224, 3).astype(np.float32)
+    pred = model.predict(x)
+
+    return {
+        "raw": pred.tolist(),
+        "class": class_names[int(np.argmax(pred))]
+    }
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
