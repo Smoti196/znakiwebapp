@@ -13,7 +13,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = tf.keras.models.load_model("model_znaki.keras")
+import os
+
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model_znaki.keras")
+model = tf.keras.models.load_model(MODEL_PATH)
 
 with open("class_names.txt", "r", encoding="utf-8") as f:
     class_names = [line.strip() for line in f.readlines()]
