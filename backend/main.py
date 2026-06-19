@@ -3,9 +3,18 @@ import tensorflow as tf
 from fastapi import FastAPI, File, UploadFile
 import numpy as np
 import cv2
-
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 MODEL_PATH = os.path.join(BASE_DIR, "model_znaki.keras")
@@ -70,8 +79,8 @@ async def predict(file: UploadFile = File(...)):
 
 
 @app.get("/")
-def root():
-    return {"status": "ok"}
+def home():
+    return FileResponse("frontend/index.html")
 
 
 @app.get("/debug")

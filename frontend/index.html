@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Znaki Drogowe</title>
+</head>
+<body>
+
+<h2>Kamera AI</h2>
+
+<video id="video" width="320" height="240" autoplay></video>
+<br>
+<button onclick="takePhoto()">Rozpoznaj znak</button>
+
+<canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+
+<p id="result"></p>
+
+<script>
+const video = document.getElementById("video");
+
+// 📷 start kamery
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        video.srcObject = stream;
+    });
+
+// 📸 robienie zdjęcia
+async function takePhoto() {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(video, 0, 0, 320, 240);
+
+    canvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append("file", blob, "photo.jpg");
+
+        const res = await fetch("/predict", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await res.json();
+
+        document.getElementById("result").innerText =
+            "AI: " + data.class + " (" + data.confidence + ")";
+    }, "image/jpeg");
+}
+</script>
+
+</body>
+</html>
