@@ -1,13 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Znaki Drogowe</title>
+    <title>ZNAKI DROGOWE</title>
+<style>
+body {
+    font-family: Verdana;
+    text-align: center;
+    background: #111;
+    color: white;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+#video {
+    width: 90vw;
+    max-width: 600px;
+    border-radius: 20px;
+    border: 3px solid #00ff99;
+    margin-top: 10px;
+}
+
+button {
+    font-size: 22px;
+    padding: 15px 25px;
+    margin-top: 15px;
+    border-radius: 12px;
+    border: none;
+    background: #00ff99;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00cc77;
+}
+
+#result {
+    font-size: 28px;
+    margin-top: 20px;
+}
+</style>
+<style>
+#result {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #00ff99;
+}
+</style>
 </head>
 <body>
 
-<h2>Kamera AI</h2>
+<h2>KAMERKA AI</h2>
 
-<video id="video" width="320" height="240" autoplay></video>
+<video id="video" autoplay></video>
 <br>
 <button onclick="takePhoto()">Rozpoznaj znak</button>
 
