@@ -7,17 +7,14 @@ MODEL_PATH = "model_znaki.keras"
 CLASS_PATH = "class_names.txt"
 IMG_SIZE = (224, 224)
 
-# load model
 model = tf.keras.models.load_model(MODEL_PATH)
 
-# load classes
 with open(CLASS_PATH, "r", encoding="utf-8") as f:
     class_names = f.read().splitlines()
 
 def preprocess(path):
     img = cv2.imread(path)
 
-    # IMPORTANT FIX (OpenCV BGR -> RGB)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     img = cv2.resize(img, IMG_SIZE)
