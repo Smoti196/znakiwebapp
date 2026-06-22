@@ -65,7 +65,6 @@ button:hover {
 <script>
 const video = document.getElementById("video");
 
-// 📷 start kamery
 navigator.mediaDevices.getUserMedia({
     video: { facingMode: "environment" }
 })
@@ -73,7 +72,6 @@ navigator.mediaDevices.getUserMedia({
         video.srcObject = stream;
     });
 
-// 📸 robienie zdjęcia
 async function takePhoto() {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
